@@ -1,4 +1,4 @@
-package pl.edu.ug.inf;
+package pl.edu.ug.inf.main;
 
 public class Main {
 
