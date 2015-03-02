@@ -2,9 +2,9 @@ package pl.edu.ug.inf.pojo;
 
 public class Person {
     public String name;
-    public int age;
-    public double weight;
-    public String surname;
+    protected int age;
+    protected double weight;
+    private String surname;
 
     public Person(String name, String surname, int age, double weight) {
         this.name = name;

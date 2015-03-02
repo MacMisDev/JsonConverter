@@ -33,6 +33,13 @@ public class JsonConverter {
                 } catch (IllegalAccessException e) {
                     System.out.println("Pole prywatne, bądź chronione - brak dostępu!");
                 }
+            }else{
+                f.setAccessible(true);
+                try {
+                    values.put(f.getName(), f.get(object).toString());
+                } catch (IllegalAccessException e) {
+                    System.out.println("Pole prywatne, bądź chronione - brak dostępu!");
+                }
             }
         }
         return values;
