@@ -11,6 +11,7 @@ public class JsonConverter {
 
     public JsonConverter() {
     }
+
     //Gettery
     public HashMap<String, String> getMap() {
         return map;
@@ -23,6 +24,12 @@ public class JsonConverter {
         map = getNamesAndValues(object.getClass().getDeclaredFields(), object);
 
         return generateJson(map);
+    }
+
+    //Metoda odpowiadająca za konwertowanie jsona na obiekt
+    public Object convertFromJson(String json, Object object){
+        
+        return null;
     }
 
     //Metoda zwracajaca HashMapę, w której znajdują się nazwy pól wraz z ich wartościami

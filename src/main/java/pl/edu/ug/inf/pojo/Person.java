@@ -2,7 +2,7 @@ package pl.edu.ug.inf.pojo;
 
 public class Person {
     public String name;
-    private final int age;
+    private int age;
     protected double weight;
     private String surname;
     private static boolean isHuman = true;
@@ -18,6 +18,9 @@ public class Person {
         this.weight = weight;
         this.surname = surname;
         this.gender = gender;
+    }
+
+    public Person() {
     }
 
     public int getAge() {
