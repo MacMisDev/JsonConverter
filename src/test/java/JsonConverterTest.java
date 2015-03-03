@@ -18,7 +18,7 @@ public class JsonConverterTest {
     @Test
     public void shouldCompareHashMapAndFieldsSize(){
         jsonConverter.convertToJson(person);
-        assertEquals(person.getClass().getDeclaredFields().length, jsonConverter.getMap().size());
+        assertEquals(person.getClass().getDeclaredFields().length, jsonConverter.getToJson().size());
     }
 
     @Test
