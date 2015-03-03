@@ -23,6 +23,6 @@ public class JsonConverterTest {
 
     @Test
     public void shouldCheckIfJsonIsValid(){
-
+        //test za pomoca konwertera z jsona na obiekt
     }
 }
