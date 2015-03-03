@@ -7,15 +7,20 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class JsonConverter {
+    private HashMap<String, String> map;
 
     public JsonConverter() {
+    }
+    //Gettery
+    public HashMap<String, String> getMap() {
+        return map;
     }
 
     //Metoda konwertujaca obiekt na json
     public String convertToJson(Object object){
 
-        Field[] fields = object.getClass().getDeclaredFields();
-        HashMap<String, String> map = getNamesAndValues(fields, object);
+
+        map = getNamesAndValues(object.getClass().getDeclaredFields(), object);
 
         return generateJson(map);
     }
@@ -46,14 +51,14 @@ public class JsonConverter {
     }
     //Metoda generujaca jsona
     private String generateJson(HashMap<String, String> map){
-        String json = "{ ";
+        String json = "{";
         Iterator iterator = map.entrySet().iterator();
         //Przechodzimy iteratorem po HashMapie dopisując klucz oraz wartość do stringa
         while(iterator.hasNext()){
             Map.Entry entry = (Map.Entry) iterator.next();
-            json += '"'+ (String)entry.getKey() + '"' + " : " + '"' + entry.getValue() + '"';
+            json += '"'+ (String)entry.getKey() + '"' + ":" + '"' + entry.getValue() + '"';
             if(iterator.hasNext()){
-               json += ", ";
+               json += ",";
             }
         }
         json += "}";
