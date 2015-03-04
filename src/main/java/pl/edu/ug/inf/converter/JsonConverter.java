@@ -48,7 +48,7 @@ public class JsonConverter {
         json = json.substring(1, json.length()-1);
 
         fromJson = getDataFromJson(splitJsonByComma(json));
-        System.out.println(object.getClass().getName());
+        System.out.println(object.getClass());
 
         return fillObjectWithData(fromJson, object);
     }
@@ -158,28 +158,66 @@ public class JsonConverter {
 
             if(data.containsKey(f.getName())){
                 f.setAccessible(true);
-/*                if(data.get(f.getName()).contains(".")) {
-                    try {
-                        f.set(object, Double.parseDouble(data.get(f.getName())));
-                    } catch (NumberFormatException e) {
-                        f.set(object, data.get(f.getName()));
+                //Srprawdź, jakiego typu jest pole w obiekcie, następnie wpisz do niego wartość
+                if(f.getType() == byte.class){
+                    try{
+                        f.set(object, Byte.parseByte(data.get(f.getName())));
+                    }catch (NumberFormatException e){
+                        e.printStackTrace();
                     }
-                }else if(f.getType() == boolean.class){
-
-                    f.set(object, Boolean.parseBoolean(data.get(f.getName())));
-                }else{
+                }else if(f.getType() == short.class){
+                    try{
+                        f.set(object, Short.parseShort(data.get(f.getName())));
+                    }catch (NumberFormatException e){
+                        e.printStackTrace();
+                    }
+                }else if(f.getType() == int.class){
                     try{
                         f.set(object, Integer.parseInt(data.get(f.getName())));
                     }catch (NumberFormatException e){
-                        f.set(object, data.get(f.getName()));
+                        e.printStackTrace();
                     }
-                }*/
-                //todo enum, typy proste
-                System.out.println(f.getType());
-
+                }else if(f.getType() == long.class){
+                    try{
+                        f.set(object, Long.parseLong(data.get(f.getName())));
+                    }catch (NumberFormatException e){
+                        e.printStackTrace();
+                    }
+                }else if(f.getType() == char.class){
+                    f.set(object, (data.get(f.getName())).charAt(0));
+                }else if(f.getType() == float.class){
+                    try{
+                        f.set(object, Float.parseFloat(data.get(f.getName())));
+                    }catch (NumberFormatException e){
+                        e.printStackTrace();
+                    }
+                }else if(f.getType() == double.class){
+                    try{
+                        f.set(object, Double.parseDouble(data.get(f.getName())));
+                    }catch (NumberFormatException e){
+                        e.printStackTrace();
+                    }
+                }else if(f.getType() == boolean.class){
+                    try{
+                        f.set(object, Boolean.parseBoolean(data.get(f.getName())));
+                    }catch (NumberFormatException e){
+                        e.printStackTrace();
+                    }
+                }else if(f.getType().isEnum()){
+                    f.set(object, Enum.valueOf((Class<Enum>) f.getType(), data.get(f.getName())));
+                }else if(f.getType().isArray()){
+                    //todo
+                }else{
+                    f.set(object, data.get(f.getName()));
+                }
 
             }else{
-
+                //Jeżeli wartość nie została odnaleziona w jsonie, to wpisz 0 bądź null
+                if((f.getType() == double.class) || (f.getType() == float.class) || (f.getType() == long.class) || (f.getType() == int.class) || (f.getType() == short.class)){
+                    f.set(object, 0);
+                }else{
+                    f.set(object, null);
+                }
             }
         }
 
