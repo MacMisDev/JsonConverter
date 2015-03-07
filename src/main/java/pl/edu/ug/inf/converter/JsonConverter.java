@@ -48,7 +48,6 @@ public class JsonConverter {
         json = json.substring(1, json.length()-1);
 
         fromJson = getDataFromJson(splitJsonByComma(json));
-        System.out.println(object.getClass());
 
         return fillObjectWithData(fromJson, object);
     }
