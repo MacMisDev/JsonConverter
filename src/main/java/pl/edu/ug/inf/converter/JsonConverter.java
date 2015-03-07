@@ -112,7 +112,6 @@ public class JsonConverter {
         for(String s : data){
 
             d = s.split(":");
-
             try{
                 //Jeżeli d[0] zaczyna się i kończy na " to kontynuuj, w innym wypadku rzuć wyjątek
                 if((d[0].charAt(0) == 34) && (d[0].charAt(d[0].length()-1) == 34)){
@@ -125,6 +124,7 @@ public class JsonConverter {
                         throw new JsonSyntaxException("Niepoprawny JSON!");
                         //Jeżeli nie ma znaków " to spróbuj skonwertować na liczbę, w przypadku niepowodzenia wyrzuć wyjątek
                     }else{
+                        d[0] = d[0].replaceAll("\"", "");
                         //Jeżeli posiada . to spróbuj skonwertować na double, w innym wypadku na inta
                         if(d[1].contains(".")){
                             try{

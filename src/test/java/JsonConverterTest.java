@@ -98,4 +98,13 @@ public class JsonConverterTest {
                 "\"name\":\"maciej\"\n" +
                 "", maciej);
     }
+
+    @Test
+    public void numberWithoutQuotationMark() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
+        jsonConverter.convertFromJson("{\n" +
+                "\"age\":24\n" +
+                "}", maciej);
+        assertEquals(maciej.getAge(), person.getAge());
+    }
+
 }
