@@ -1,7 +1,7 @@
 package pl.edu.ug.inf.converter;
 
+import pl.edu.ug.inf.exceptions.JsonConvertToObjectException;
 import pl.edu.ug.inf.exceptions.JsonSyntaxException;
-import pl.edu.ug.inf.exceptions.JsonToObjectException;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -34,18 +34,22 @@ public class JsonConverter {
     }
 
     //Metoda odpowiadająca za konwertowanie jsona na obiekt
-    public Object convertFromJson(String json, Object object) throws JsonSyntaxException, JsonToObjectException, IllegalAccessException {
+    public Object convertFromJson(String json, Object object) throws JsonSyntaxException, JsonConvertToObjectException, IllegalAccessException {
+        //Wyrzucenie wszystkich enterów oraz spacji
+        json = json.replaceAll(" ", "");
+        json = json.replaceAll("\n", "");
 
         //Sprawdzamy, czy json zaczyna się od { oraz kończy na } oraz, czy przedostatni znak to nie przecinek
         if(!(json.charAt(0) == 123) || !(json.charAt(json.length()-1) == 125) || (json.charAt(json.length()-2) == 44)){
             throw new JsonSyntaxException("JSON nie zaczyna się od { bądź nie kończy się na } lub posiada , po ostatnim elemencie");
         }
-        //Wyrzucenie wszystkich enterów oraz spacji
-        json = json.replaceAll(" ", "");
-        json = json.replaceAll("\n", "");
 
         //Pozbycie się początkowego oraz końcowego znaku
         json = json.substring(1, json.length()-1);
+
+        if(json.length() == 0){
+            throw new JsonSyntaxException("empty json");
+        }
 
         fromJson = getDataFromJson(splitJsonByComma(json));
 
@@ -102,55 +106,63 @@ public class JsonConverter {
 
         HashMap<String, String> result = new HashMap<String, String>();
         String[] d;
+
         for(String s : data){
 
             d = s.split(":");
-            //Jeżeli d[0] zaczyna się i kończy na " to kontynuuj, w innym wypadku rzuć wyjątek
-            if((d[0].charAt(0) == 34) && (d[0].charAt(d[0].length()-1) == 34)){
-                //Jeżeli d[1] zaczyna się i kończy na " to kontynuuj
-                if((d[1].charAt(0) == 34) && (d[1].charAt(d[1].length()-1) == 34)){
-                    d[0] = d[0].replaceAll("\"", "");
-                    d[1] = d[1].replaceAll("\"", "");
-                //W innym wypadku sprawdź, czy początkujący znak bądź ostatni jest ". Jeżeli tak, to rzuć wyjątek
-                }else if((d[1].charAt(0) == 34) || (d[1].charAt(d[1].length()-1) == 34)){
-                    throw new JsonSyntaxException("Niepoprawny JSON!");
-                //Jeżeli nie ma znaków " to spróbuj skonwertować na liczbę, w przypadku niepowodzenia wyrzuć wyjątek
-                }else{
-                    //Jeżeli posiada . to spróbuj skonwertować na double, w innym wypadku na inta
-                    if(d[1].contains(".")){
-                        try{
-                            Double.parseDouble(d[1]);
-                        }catch(NumberFormatException e){
-                            throw new JsonSyntaxException("Niepoprawny JSON!");
-                        }
+
+            try{
+                //Jeżeli d[0] zaczyna się i kończy na " to kontynuuj, w innym wypadku rzuć wyjątek
+                if((d[0].charAt(0) == 34) && (d[0].charAt(d[0].length()-1) == 34)){
+                    //Jeżeli d[1] zaczyna się i kończy na " to kontynuuj
+                    if((d[1].charAt(0) == 34) && (d[1].charAt(d[1].length()-1) == 34)){
+                        d[0] = d[0].replaceAll("\"", "");
+                        d[1] = d[1].replaceAll("\"", "");
+                        //W innym wypadku sprawdź, czy początkujący znak bądź ostatni jest ". Jeżeli tak, to rzuć wyjątek
+                    }else if((d[1].charAt(0) == 34) || (d[1].charAt(d[1].length()-1) == 34)){
+                        throw new JsonSyntaxException("Niepoprawny JSON!");
+                        //Jeżeli nie ma znaków " to spróbuj skonwertować na liczbę, w przypadku niepowodzenia wyrzuć wyjątek
                     }else{
-                        try{
-                            Integer.parseInt(d[1]);
-                        }catch(NumberFormatException e){
-                            throw new JsonSyntaxException("Niepoprawny JSON!");
+                        //Jeżeli posiada . to spróbuj skonwertować na double, w innym wypadku na inta
+                        if(d[1].contains(".")){
+                            try{
+                                Double.parseDouble(d[1]);
+                            }catch(NumberFormatException e){
+                                throw new JsonSyntaxException("Niepoprawny JSON!");
+                            }
+                        }else{
+                            try{
+                                Integer.parseInt(d[1]);
+                            }catch(NumberFormatException e){
+                                throw new JsonSyntaxException("Niepoprawny JSON!");
+                            }
                         }
                     }
+                }else{
+                    throw new JsonSyntaxException("Niepoprawny JSON!");
                 }
-            }else{
+                //Jeżeli ktoś dał podwójny : to zgłoś wyjątek
+                if(d.length == 2){
+                    result.put(d[0], d[1]);
+                }else{
+                    throw new JsonSyntaxException("Niepoprawny JSON!");
+                }
+            //Jeżeli złapiemy StringIndexOutOfBoundsException to oznacza, ze json jest zle zbudowany.
+            }catch(StringIndexOutOfBoundsException e){
                 throw new JsonSyntaxException("Niepoprawny JSON!");
             }
-            //Jeżeli ktoś dał podwójny : to zgłoś wyjątek
-            if(d.length == 2){
-                result.put(d[0], d[1]);
-            }else{
-                throw new JsonSyntaxException("Niepoprawny JSON!");
-            }
+
 
         }
         return result;
     }
 
     //Metoda wypelniajaca obiekt informacjami z jsona
-    private Object fillObjectWithData(HashMap<String, String> data, Object object) throws JsonToObjectException, IllegalAccessException {
+    private Object fillObjectWithData(HashMap<String, String> data, Object object) throws JsonConvertToObjectException, IllegalAccessException {
         Field[] fields = object.getClass().getDeclaredFields();
         //Jeżeli liczba pól w obiekcie jest mniejsza niż ilość elementów w Jsonie, to wyrzuć wyjątek
         if(fields.length < data.size()){
-            throw new JsonToObjectException();
+            throw new JsonConvertToObjectException();
         }
 
         for(Field f : fields){
@@ -211,12 +223,20 @@ public class JsonConverter {
                 }
 
             }else{
+                f.setAccessible(true);
                 //Jeżeli wartość nie została odnaleziona w jsonie, to wpisz 0 bądź null
-                if((f.getType() == double.class) || (f.getType() == float.class) || (f.getType() == long.class) || (f.getType() == int.class) || (f.getType() == short.class)){
+                if((f.getType() == double.class) || (f.getType() == float.class) || (f.getType() == long.class) || (f.getType() == int.class)) {
                     f.set(object, 0);
+                }else if((f.getType() == short.class)){
+                    f.set(object, (short)0);
+                }else if(f.getType() == boolean.class){
+                    f.set(object, false);
+                }else if(f.getType() == char.class){
+                    f.set(object, (char)0);
                 }else{
                     f.set(object, null);
                 }
+
             }
         }
 
