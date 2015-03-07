@@ -61,11 +61,41 @@ public class JsonConverterTest {
     }
 
     @Test
+    public void lackOfQuotationMark() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
+        exception.expect(JsonSyntaxException.class);
+        jsonConverter.convertFromJson("{\n" +
+                "name:\"maciej\"\n" +
+                "}" ,maciej);
+    }
+
+    @Test
+    public void invalidEmptyJsonTest() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
+        exception.expect(JsonSyntaxException.class);
+        jsonConverter.convertFromJson("", maciej);
+    }
+
+    @Test
     public void emptyJsonTest() throws JsonConvertToObjectException, IllegalAccessException, JsonSyntaxException {
         exception.expect(JsonSyntaxException.class);
         exception.expectMessage("empty json");
         jsonConverter.convertFromJson("{\n" +
                 "\n" +
                 "}", maciej);
+    }
+
+    @Test
+    public void invalidJsonFirstCharacter() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
+        exception.expect(JsonSyntaxException.class);
+        jsonConverter.convertFromJson("\n" +
+                "\"name\":\"maciej\"\n" +
+                "}", maciej);
+    }
+
+    @Test
+    public void invalidJsonLastsCharacter() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
+        exception.expect(JsonSyntaxException.class);
+        jsonConverter.convertFromJson("{\n" +
+                "\"name\":\"maciej\"\n" +
+                "", maciej);
     }
 }

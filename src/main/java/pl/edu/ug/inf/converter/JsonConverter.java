@@ -40,7 +40,9 @@ public class JsonConverter {
         json = json.replaceAll("\n", "");
 
         //Sprawdzamy, czy json zaczyna się od { oraz kończy na } oraz, czy przedostatni znak to nie przecinek
-        if(!(json.charAt(0) == 123) || !(json.charAt(json.length()-1) == 125) || (json.charAt(json.length()-2) == 44)){
+        if(json.length() == 0){
+            throw new JsonSyntaxException("empty json");
+        }else if(!(json.charAt(0) == 123) || !(json.charAt(json.length()-1) == 125) || (json.charAt(json.length()-2) == 44)){
             throw new JsonSyntaxException("JSON nie zaczyna się od { bądź nie kończy się na } lub posiada , po ostatnim elemencie");
         }
 

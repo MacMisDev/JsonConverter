@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fe94b4-1a56-402b-9c10-c3139f4461e8" name="Default" comment="">
-      <change type="DELETED" beforePath="D:\Maciek\Programowanie\Java EE\JsonConverter\src\main\java\pl\edu\ug\inf\main\Main.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/pl/edu/ug/inf/converter/JsonConverter.java" afterPath="$PROJECT_DIR$/src/main/java/pl/edu/ug/inf/converter/JsonConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/JsonConverterTest.java" afterPath="$PROJECT_DIR$/src/test/java/JsonConverterTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="JsonConverter.iws" />
@@ -29,8 +30,8 @@
       <file leaf-file-name="JsonConverter.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/pl/edu/ug/inf/converter/JsonConverter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="146" max-vertical-offset="4063">
-              <caret line="39" column="41" selection-start-line="39" selection-start-column="41" selection-end-line="39" selection-end-column="41" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="310" max-vertical-offset="4097">
+              <caret line="44" column="32" selection-start-line="44" selection-start-column="32" selection-end-line="44" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -70,8 +71,8 @@
       <file leaf-file-name="JsonConverterTest.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/JsonConverterTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6875957" vertical-offset="299" max-vertical-offset="1207">
-              <caret line="50" column="42" selection-start-line="50" selection-start-column="42" selection-end-line="50" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.7136294" vertical-offset="1064" max-vertical-offset="1717">
+              <caret line="96" column="45" selection-start-line="96" selection-start-column="45" selection-end-line="96" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -101,8 +102,8 @@
         <option value="$PROJECT_DIR$/src/main/java/pl/edu/ug/inf/pojo/Person.java" />
         <option value="$PROJECT_DIR$/src/main/java/pl/edu/ug/inf/main/Main.java" />
         <option value="$PROJECT_DIR$/src/test/java/Person.java" />
-        <option value="$PROJECT_DIR$/src/test/java/JsonConverterTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/pl/edu/ug/inf/converter/JsonConverter.java" />
+        <option value="$PROJECT_DIR$/src/test/java/JsonConverterTest.java" />
       </list>
     </option>
   </component>
@@ -543,7 +544,7 @@
       <workItem from="1425388235200" duration="21113000" />
       <workItem from="1425496770196" duration="5940000" />
       <workItem from="1425568885599" duration="796000" />
-      <workItem from="1425730924369" duration="7734000" />
+      <workItem from="1425730924369" duration="9401000" />
     </task>
     <task id="LOCAL-00001" summary="basic class, .gitignore">
       <created>1425318397668</created>
@@ -597,11 +598,15 @@
       <created>1425752016384</created>
       <updated>1425752016384</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="usuniety main">
+      <created>1425752203465</created>
+      <updated>1425752203465</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44757000" />
+    <option name="totallyTimeSpent" value="46424000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -663,7 +668,8 @@
     <MESSAGE value="convertFromJson gotowy dla prostych jsonow" />
     <MESSAGE value="podstawowy test dla convertToJson" />
     <MESSAGE value="testy dla kownersji jsona do obiektu oraz drobne poprawki w kodzie, wynikajace z testow" />
-    <option name="LAST_COMMIT_MESSAGE" value="testy dla kownersji jsona do obiektu oraz drobne poprawki w kodzie, wynikajace z testow" />
+    <MESSAGE value="usuniety main" />
+    <option name="LAST_COMMIT_MESSAGE" value="usuniety main" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -915,6 +921,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/edu/ug/inf/converter/JsonConverter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="310" max-vertical-offset="4097">
+          <caret line="44" column="32" selection-start-line="44" selection-start-column="32" selection-end-line="44" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/Person.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1513">
@@ -944,18 +958,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/edu/ug/inf/converter/JsonConverter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="146" max-vertical-offset="4063">
-          <caret line="39" column="41" selection-start-line="39" selection-start-column="41" selection-end-line="39" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/JsonConverterTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6875957" vertical-offset="299" max-vertical-offset="1207">
-          <caret line="50" column="42" selection-start-line="50" selection-start-column="42" selection-end-line="50" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.7136294" vertical-offset="1064" max-vertical-offset="1717">
+          <caret line="96" column="45" selection-start-line="96" selection-start-column="45" selection-end-line="96" selection-end-column="45" />
           <folding />
         </state>
       </provider>
