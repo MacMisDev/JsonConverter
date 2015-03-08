@@ -140,4 +140,10 @@ public class JsonConverterTest {
                 "}", maciej);
     }
 
+    @Test
+    public void moreDataFromJsonThanFieldsInObjectTest() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
+        exception.expect(JsonConvertToObjectException.class);
+        jsonConverter.convertFromJson("{\"insurance\":\"true\",\"weight\":\"78.5\",\"isHuman\":\"true\",\"age\":\"24\",\"name\":\"Maciej\",\"gender\":\"MAN\",\"surname\":\"Miś\",\"militaryCategory\":\"A\",\"childNumber\":\"0\", \"country\":\"Polska\"}", maciej);
+    }
+
 }
