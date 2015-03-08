@@ -22,14 +22,14 @@ public class JsonConverterTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void CompareHashMapAndFieldsSize(){
+    public void CompareHashMapAndFieldsSizeTest(){
         jsonConverter.convertToJson(person);
         assertEquals(person.getClass().getDeclaredFields().length, jsonConverter.getToJson().size());
 
     }
 
     @Test
-    public void CheckIfJsonIsValid() throws JsonConvertToObjectException, IllegalAccessException, JsonSyntaxException {
+    public void CheckIfJsonIsValidTest() throws JsonConvertToObjectException, IllegalAccessException, JsonSyntaxException {
         final double epsilon = 1e-15;
         String json = jsonConverter.convertToJson(person);
         jsonConverter.convertFromJson(json, maciej);
@@ -45,7 +45,7 @@ public class JsonConverterTest {
 
 
     @Test
-    public void doubleColonInJson() throws JsonConvertToObjectException, IllegalAccessException, JsonSyntaxException {
+    public void doubleColonInJsonTest() throws JsonConvertToObjectException, IllegalAccessException, JsonSyntaxException {
         exception.expect(JsonSyntaxException.class);
         jsonConverter.convertFromJson("{\n" +
                 "\"name\"::\"Maciej\"\n" +
@@ -53,7 +53,7 @@ public class JsonConverterTest {
     }
 
     @Test
-    public void comaAfterLastValue() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
+    public void comaAfterLastValueTest() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
         exception.expect(JsonSyntaxException.class);
         jsonConverter.convertFromJson("{\n" +
                 "\"name\":\"maciej\",\n" +
@@ -61,7 +61,15 @@ public class JsonConverterTest {
     }
 
     @Test
-    public void lackOfQuotationMark() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
+    public void comaBeforeFirstValueTest() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
+        exception.expect(JsonSyntaxException.class);
+        jsonConverter.convertFromJson("{,\n" +
+                "\"name\":\"maciej\"\n" +
+                "}", maciej);
+    }
+
+    @Test
+    public void lackOfQuotationMarkTest() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
         exception.expect(JsonSyntaxException.class);
         jsonConverter.convertFromJson("{\n" +
                 "name:\"maciej\"\n" +
@@ -84,7 +92,7 @@ public class JsonConverterTest {
     }
 
     @Test
-    public void invalidJsonFirstCharacter() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
+    public void invalidJsonFirstCharacterTest() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
         exception.expect(JsonSyntaxException.class);
         jsonConverter.convertFromJson("\n" +
                 "\"name\":\"maciej\"\n" +
@@ -92,7 +100,7 @@ public class JsonConverterTest {
     }
 
     @Test
-    public void invalidJsonLastsCharacter() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
+    public void invalidJsonLastsCharacterTest() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
         exception.expect(JsonSyntaxException.class);
         jsonConverter.convertFromJson("{\n" +
                 "\"name\":\"maciej\"\n" +
@@ -100,11 +108,36 @@ public class JsonConverterTest {
     }
 
     @Test
-    public void numberWithoutQuotationMark() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
+    public void numberWithoutQuotationMarkTest() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
         jsonConverter.convertFromJson("{\n" +
                 "\"age\":24\n" +
                 "}", maciej);
         assertEquals(maciej.getAge(), person.getAge());
+    }
+
+    @Test
+    public void numberWithQuotationMarkTest() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
+        jsonConverter.convertFromJson("{\n" +
+                "\"age\":\"24\"\n" +
+                "}", maciej);
+        assertEquals(maciej.getAge(), person.getAge());
+    }
+
+    @Test
+    public void randomWordAfterQuotationMarkTest() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
+        exception.expect(JsonSyntaxException.class);
+        jsonConverter.convertFromJson("{\n" +
+                "\"age\"invalid:\"24\"\n" +
+                "}", maciej);
+    }
+
+    @Test
+    public void missingComaTest() throws IllegalAccessException, JsonSyntaxException, JsonConvertToObjectException {
+        exception.expect(JsonSyntaxException.class);
+        jsonConverter.convertFromJson("{\n" +
+                "\"name\":\"maciej\"\n" +
+                "\"age\":24\n" +
+                "}", maciej);
     }
 
 }
