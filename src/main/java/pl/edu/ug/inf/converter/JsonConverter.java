@@ -12,8 +12,10 @@ import java.util.Map;
 public class JsonConverter {
     private HashMap<String, String> toJson;
     private HashMap<String, String> fromJson;
+    private String json;
 
     public JsonConverter() {
+        this.json = "";
     }
 
     //Gettery
@@ -59,32 +61,91 @@ public class JsonConverter {
     }
 
     //Metoda zwracajaca HashMapę, w której znajdują się nazwy pól wraz z ich wartościami
-    private HashMap getNamesAndValues(Field[] fields, Object object){
+    private HashMap<String, String> getNamesAndValues(Field[] fields, Object object){
 
         HashMap<String, String> values = new HashMap<String, String>();
         for(Field f: fields){
+            //Jezeli typ pola nie jest typem prostym, enumem badz stringiem, to idz dalej
+            if(!f.getType().isPrimitive() && !f.getType().isEnum() && !f.getType().getName().equals("java.lang.String")){
+                //Jeżeli to tablica, to wykonaj
+                if(f.getType().isArray()){
+                    //jak tablica
+                //Jeżeli to nie jest tablica, to wywolaj metode generateJsonForInnerClass
+                }else{
+                    try{
+                        f.setAccessible(true);
+                        this.json = generateJsonForInnerClass(json, f.get(object), f.getName());
+                    }catch(IllegalAccessException e){
+                        e.printStackTrace();
+                    }
+                }
+            //W przeciwnym wypadku dodaj pole do hashmapy
+            }else{
+                //Jeżeli pole jest publiczne
+                if (f.getModifiers() == Modifier.PUBLIC) {
+                    try {
+                        //Dopisz do HashMapy nazwę zmiennej jako klucz oraz jej wartość
+                        values.put(f.getName(), f.get(object).toString());
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    f.setAccessible(true);
+                    try {
+                        values.put(f.getName(), f.get(object).toString());
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return values;
+    }
+
+    //Metoda wpisujaca do jsona klasy wewnetrzne w obiekcie
+    private String generateJsonForInnerClass(String json, Object object, String name) {
+        //Jeżeli json jest pusty, to dopisz znak poczatkowy
+        if(json.length() == 0){
+            json += "{\"" + name + "\":{";
+        }else{
+            json += ",\"" + name + "\":{";
+        }
+
+
+        for(Field f : object.getClass().getDeclaredFields()){
             //Jeżeli pole jest publiczne
             if(f.getModifiers() == Modifier.PUBLIC){
                 try {
-                    //Dopisz do HashMapy nazwę zmiennej jako klucz oraz jej wartość
-                    values.put(f.getName(), f.get(object).toString());
+                    json += "\"" + f.getName() + "\":\"" + f.get(object).toString() + "\",";
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }else{
                 f.setAccessible(true);
                 try {
-                    values.put(f.getName(), f.get(object).toString());
+                    json += "\"" + f.getName() + "\":\"" + f.get(object).toString() + "\",";
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
         }
-        return values;
+        //Utnij ostatni przecinek
+        json = json.substring(0, json.length()-1);
+        json += "},";
+
+        return json;
     }
+
     //Metoda generujaca jsona
     private String generateJson(HashMap<String, String> map){
-        String json = "{";
+        if(json.length() == 0) {
+            json += "{";
+        }
+        //Jeżeli mapa jest pusta, to utnij przecinek
+        if(map.size() == 0){
+            json = json.substring(0, json.length()-1);
+        }
+
         Iterator iterator = map.entrySet().iterator();
         //Przechodzimy iteratorem po HashMapie dopisując klucz oraz wartość do stringa
         while(iterator.hasNext()){

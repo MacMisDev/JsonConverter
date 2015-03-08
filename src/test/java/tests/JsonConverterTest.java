@@ -1,8 +1,12 @@
+package tests;
+
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 import pl.edu.ug.inf.converter.JsonConverter;
 import pl.edu.ug.inf.exceptions.JsonConvertToObjectException;
 import pl.edu.ug.inf.exceptions.JsonSyntaxException;
+import pojo.Company;
+import pojo.Person;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,12 +14,14 @@ public class JsonConverterTest {
     private JsonConverter jsonConverter;
     private Person person;
     private Person maciej;
+    private Company company;
 
     @Before
     public void prepareForTests(){
         jsonConverter = new JsonConverter();
         person = new Person("Maciej", "Miś", 24, 78.5, Person.Gender.MAN, true, (short)0, (char)65);
         maciej = new Person();
+        company = new Company("M.M Industries" ,person);
     }
 
     @Rule
@@ -145,5 +151,12 @@ public class JsonConverterTest {
         exception.expect(JsonConvertToObjectException.class);
         jsonConverter.convertFromJson("{\"insurance\":\"true\",\"weight\":\"78.5\",\"isHuman\":\"true\",\"age\":\"24\",\"name\":\"Maciej\",\"gender\":\"MAN\",\"surname\":\"Miś\",\"militaryCategory\":\"A\",\"childNumber\":\"0\", \"country\":\"Polska\"}", maciej);
     }
+
+    @Test
+    public void innerClassInObjectTest(){
+        //do zrobienia, jak konwerter z jsona na obiekt bedzie konwertowal wewnetrzne klasy
+        System.out.println(jsonConverter.convertToJson(company));
+    }
+
 
 }
