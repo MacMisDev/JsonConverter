@@ -74,7 +74,7 @@ public class JsonConverter {
                 }else{
                     try{
                         f.setAccessible(true);
-                        this.json = generateJsonForInnerClass(json, f.get(object), f.getName());
+                        this.json = generateJsonForInnerClass(f.get(object), f.getName());
                     }catch(IllegalAccessException e){
                         e.printStackTrace();
                     }
@@ -103,33 +103,50 @@ public class JsonConverter {
     }
 
     //Metoda wpisujaca do jsona klasy wewnetrzne w obiekcie
-    private String generateJsonForInnerClass(String json, Object object, String name) {
+    private String generateJsonForInnerClass(Object object, String name) {
         //Jeżeli json jest pusty, to dopisz znak poczatkowy
         if(json.length() == 0){
             json += "{\"" + name + "\":{";
         }else{
-            json += ",\"" + name + "\":{";
+            json += "\"" + name + "\":{";
         }
 
 
         for(Field f : object.getClass().getDeclaredFields()){
-            //Jeżeli pole jest publiczne
-            if(f.getModifiers() == Modifier.PUBLIC){
-                try {
-                    json += "\"" + f.getName() + "\":\"" + f.get(object).toString() + "\",";
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+            //Jezeli typ pola nie jest typem prostym, enumem badz stringiem, to idz dalej
+            if(!f.getType().isPrimitive() && !f.getType().isEnum() && !f.getType().getName().equals("java.lang.String")) {
+                //Jeżeli to tablica, to wykonaj
+                if (f.getType().isArray()) {
+                    //jak tablica
+                    //Jeżeli to nie jest tablica, to wywolaj metode generateJsonForInnerClass
+                } else {
+                    try {
+                        f.setAccessible(true);
+                        this.json = generateJsonForInnerClass(f.get(object), f.getName());
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }else{
-                f.setAccessible(true);
-                try {
-                    json += "\"" + f.getName() + "\":\"" + f.get(object).toString() + "\",";
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+            }else {
+                //Jeżeli pole jest publiczne
+                if (f.getModifiers() == Modifier.PUBLIC) {
+                    try {
+                        json += "\"" + f.getName() + "\":\"" + f.get(object).toString() + "\",";
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    f.setAccessible(true);
+                    try {
+                        json += "\"" + f.getName() + "\":\"" + f.get(object).toString() + "\",";
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
         //Utnij ostatni przecinek
+
         json = json.substring(0, json.length()-1);
         json += "},";
 

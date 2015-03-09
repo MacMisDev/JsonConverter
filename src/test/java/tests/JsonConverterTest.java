@@ -6,6 +6,7 @@ import pl.edu.ug.inf.converter.JsonConverter;
 import pl.edu.ug.inf.exceptions.JsonConvertToObjectException;
 import pl.edu.ug.inf.exceptions.JsonSyntaxException;
 import pojo.Company;
+import pojo.Partnership;
 import pojo.Person;
 
 import static org.junit.Assert.assertEquals;
@@ -15,13 +16,15 @@ public class JsonConverterTest {
     private Person person;
     private Person maciej;
     private Company company;
+    private Partnership partnership;
 
     @Before
     public void prepareForTests(){
         jsonConverter = new JsonConverter();
         person = new Person("Maciej", "Miś", 24, 78.5, Person.Gender.MAN, true, (short)0, (char)65);
         maciej = new Person();
-        company = new Company("M.M Industries" ,person);
+        company = new Company("M.M Industries" ,person, person);
+        partnership = new Partnership(company, company);
     }
 
     @Rule
@@ -157,6 +160,12 @@ public class JsonConverterTest {
         //do zrobienia, jak konwerter z jsona na obiekt bedzie konwertowal wewnetrzne klasy
         System.out.println(jsonConverter.convertToJson(company));
     }
+
+    @Test
+    public void innerInnerClassInObjectTest(){
+        System.out.println(jsonConverter.convertToJson(partnership));
+    }
+
 
 
 }
