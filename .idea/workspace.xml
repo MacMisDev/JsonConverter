@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fe94b4-1a56-402b-9c10-c3139f4461e8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/tests/JsonConverterTest.java" afterPath="$PROJECT_DIR$/src/test/java/tests/JsonConverterTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -44,7 +43,7 @@
           </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.08319739" vertical-offset="0" max-vertical-offset="613">
-              <caret line="3" column="127" selection-start-line="3" selection-start-column="127" selection-end-line="3" selection-end-column="127" />
+              <caret line="3" column="144" selection-start-line="3" selection-start-column="144" selection-end-line="3" selection-end-column="144" />
               <folding />
             </state>
           </provider>
@@ -616,7 +615,7 @@
       <workItem from="1425730924369" duration="11612000" />
       <workItem from="1425827133588" duration="11165000" />
       <workItem from="1425930434735" duration="2997000" />
-      <workItem from="1425997959576" duration="5048000" />
+      <workItem from="1425997959576" duration="5146000" />
     </task>
     <task id="LOCAL-00001" summary="basic class, .gitignore">
       <created>1425318397668</created>
@@ -706,11 +705,15 @@
       <created>1426011925545</created>
       <updated>1426011925545</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="readme update">
+      <created>1426013281334</created>
+      <updated>1426013281334</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="67845000" />
+    <option name="totallyTimeSpent" value="67943000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -781,7 +784,8 @@
     <MESSAGE value="poprawka tworzenia klas wewnetrznych" />
     <MESSAGE value="obiekt -&gt; json dla tablic jednowymiarowych" />
     <MESSAGE value="usunalem niektore testy" />
-    <option name="LAST_COMMIT_MESSAGE" value="usunalem niektore testy" />
+    <MESSAGE value="readme update" />
+    <option name="LAST_COMMIT_MESSAGE" value="readme update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1068,7 +1072,7 @@
       </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.08319739" vertical-offset="0" max-vertical-offset="613">
-          <caret line="3" column="127" selection-start-line="3" selection-start-column="127" selection-end-line="3" selection-end-column="127" />
+          <caret line="3" column="144" selection-start-line="3" selection-start-column="144" selection-end-line="3" selection-end-column="144" />
           <folding />
         </state>
       </provider>
