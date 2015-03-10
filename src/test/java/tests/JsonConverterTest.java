@@ -8,6 +8,7 @@ import pl.edu.ug.inf.exceptions.JsonSyntaxException;
 import pojo.Company;
 import pojo.Partnership;
 import pojo.Person;
+import pojo.Table;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,6 +18,7 @@ public class JsonConverterTest {
     private Person maciej;
     private Company company;
     private Partnership partnership;
+    private Table table;
 
     @Before
     public void prepareForTests(){
@@ -25,6 +27,7 @@ public class JsonConverterTest {
         maciej = new Person();
         company = new Company("M.M Industries" ,person, person);
         partnership = new Partnership(company, company);
+        table = new Table(company);
     }
 
     @Rule
@@ -155,15 +158,23 @@ public class JsonConverterTest {
         jsonConverter.convertFromJson("{\"insurance\":\"true\",\"weight\":\"78.5\",\"isHuman\":\"true\",\"age\":\"24\",\"name\":\"Maciej\",\"gender\":\"MAN\",\"surname\":\"Miś\",\"militaryCategory\":\"A\",\"childNumber\":\"0\", \"country\":\"Polska\"}", maciej);
     }
 
+    @Ignore
     @Test
     public void innerClassInObjectTest(){
-        //do zrobienia, jak konwerter z jsona na obiekt bedzie konwertowal wewnetrzne klasy
         System.out.println(jsonConverter.convertToJson(company));
     }
 
+    @Ignore
     @Test
     public void innerInnerClassInObjectTest(){
+
         System.out.println(jsonConverter.convertToJson(partnership));
+    }
+
+    @Test
+    public void testtest(){
+
+        System.out.println(jsonConverter.convertToJson(table));
     }
 
 

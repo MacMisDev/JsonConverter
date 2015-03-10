@@ -3,6 +3,7 @@ package pl.edu.ug.inf.converter;
 import pl.edu.ug.inf.exceptions.JsonConvertToObjectException;
 import pl.edu.ug.inf.exceptions.JsonSyntaxException;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
@@ -69,7 +70,7 @@ public class JsonConverter {
             if(!f.getType().isPrimitive() && !f.getType().isEnum() && !f.getType().getName().equals("java.lang.String")){
                 //Jeżeli to tablica, to wykonaj
                 if(f.getType().isArray()){
-                    //jak tablica
+                    generateJsonFromAnArray(object, f, f.getName());
                 //Jeżeli to nie jest tablica, to wywolaj metode generateJsonForInnerClass
                 }else{
                     try{
@@ -146,7 +147,6 @@ public class JsonConverter {
             }
         }
         //Utnij ostatni przecinek
-
         json = json.substring(0, json.length()-1);
         json += "},";
 
@@ -197,10 +197,10 @@ public class JsonConverter {
                     if((d[1].charAt(0) == 34) && (d[1].charAt(d[1].length()-1) == 34)){
                         d[0] = d[0].replaceAll("\"", "");
                         d[1] = d[1].replaceAll("\"", "");
-                        //W innym wypadku sprawdź, czy początkujący znak bądź ostatni jest ". Jeżeli tak, to rzuć wyjątek
+                    //W innym wypadku sprawdź, czy początkujący znak bądź ostatni jest ". Jeżeli tak, to rzuć wyjątek
                     }else if((d[1].charAt(0) == 34) || (d[1].charAt(d[1].length()-1) == 34)){
                         throw new JsonSyntaxException("Niepoprawny JSON!");
-                        //Jeżeli nie ma znaków " to spróbuj skonwertować na liczbę, w przypadku niepowodzenia wyrzuć wyjątek
+                    //Jeżeli nie ma znaków " to spróbuj skonwertować na liczbę, w przypadku niepowodzenia wyrzuć wyjątek
                     }else{
                         d[0] = d[0].replaceAll("\"", "");
                         //Jeżeli posiada . to spróbuj skonwertować na double, w innym wypadku na inta
@@ -321,6 +321,35 @@ public class JsonConverter {
         }
 
         return object;
+    }
+
+    private void generateJsonFromAnArray(Object object, Field field, String name){
+        //Jeżeli json jest pusty, to dopisz znak poczatkowy
+        if(json.length() == 0){
+            json += "{\"" + name + "\":[";
+        }else{
+            json += "\"" + name + "\":[";
+        }
+        try {
+            field.setAccessible(true);
+            for(int i = 0; i < Array.getLength(field.get(object)); i++){
+                json += "\"" + Array.get(field.get(object),i) + "\",";
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+
+        //Utnij ostatni przecinek
+        json = json.substring(0, json.length()-1);
+        json += "],";
+
+
     }
 
 }
