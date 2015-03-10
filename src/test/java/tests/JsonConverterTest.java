@@ -158,25 +158,5 @@ public class JsonConverterTest {
         jsonConverter.convertFromJson("{\"insurance\":\"true\",\"weight\":\"78.5\",\"isHuman\":\"true\",\"age\":\"24\",\"name\":\"Maciej\",\"gender\":\"MAN\",\"surname\":\"Miś\",\"militaryCategory\":\"A\",\"childNumber\":\"0\", \"country\":\"Polska\"}", maciej);
     }
 
-    @Ignore
-    @Test
-    public void innerClassInObjectTest(){
-        System.out.println(jsonConverter.convertToJson(company));
-    }
-
-    @Ignore
-    @Test
-    public void innerInnerClassInObjectTest(){
-
-        System.out.println(jsonConverter.convertToJson(partnership));
-    }
-
-    @Test
-    public void testtest(){
-
-        System.out.println(jsonConverter.convertToJson(table));
-    }
-
-
 
 }
