@@ -62,8 +62,8 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.19181946" vertical-offset="0" max-vertical-offset="709">
-              <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+            <state vertical-scroll-proportion="0.047954865" vertical-offset="0" max-vertical-offset="709">
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -583,7 +583,7 @@
       <workItem from="1425827133588" duration="11165000" />
       <workItem from="1425930434735" duration="2997000" />
       <workItem from="1425997959576" duration="6171000" />
-      <workItem from="1426165521099" duration="427000" />
+      <workItem from="1426165521099" duration="446000" />
     </task>
     <task id="LOCAL-00001" summary="basic class, .gitignore">
       <created>1425318397668</created>
@@ -689,11 +689,15 @@
       <created>1426165706522</created>
       <updated>1426165706522</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="travis">
+      <created>1426165961317</created>
+      <updated>1426165961317</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69395000" />
+    <option name="totallyTimeSpent" value="69414000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -742,7 +746,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="basic class, .gitignore" />
     <MESSAGE value="podstawowy konwerter obiekt-json dla publicznych typow prostych zrobiony" />
     <MESSAGE value="podstawowa klasa osoby" />
     <MESSAGE value="konwertowanie pol prywatnych, chronionych, itp" />
@@ -767,7 +770,8 @@
     <MESSAGE value="readme update" />
     <MESSAGE value="dodany travis" />
     <MESSAGE value="usuniety test" />
-    <option name="LAST_COMMIT_MESSAGE" value="usuniety test" />
+    <MESSAGE value="travis" />
+    <option name="LAST_COMMIT_MESSAGE" value="travis" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1054,8 +1058,8 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19181946" vertical-offset="0" max-vertical-offset="709">
-          <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.047954865" vertical-offset="0" max-vertical-offset="709">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding />
         </state>
       </provider>
