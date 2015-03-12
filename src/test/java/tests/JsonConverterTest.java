@@ -157,13 +157,4 @@ public class JsonConverterTest {
         exception.expect(JsonConvertToObjectException.class);
         jsonConverter.convertFromJson("{\"insurance\":\"true\",\"weight\":\"78.5\",\"isHuman\":\"true\",\"age\":\"24\",\"name\":\"Maciej\",\"gender\":\"MAN\",\"surname\":\"Miś\",\"militaryCategory\":\"A\",\"childNumber\":\"0\", \"country\":\"Polska\"}", maciej);
     }
-
-    @Test
-    public void test(){
-        String s = "bla";
-        System.out.println(jsonConverter.convertToJson(s));
-    }
-
-
-
 }
